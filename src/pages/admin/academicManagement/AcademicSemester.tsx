@@ -1,18 +1,16 @@
 import { Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
+import { TAcademicSemester } from "../../../types";
+import { useState } from "react";
 
-interface DataType {
-    key: React.Key;
-    name: string;
-    age: number;
-    address: string;
-}
+type TTableData = Pick<TAcademicSemester, "name" | "_id" | "startMonth" | "endMonth" | "year">;
 
 const AcademicSemester = () => {
-    const { data: academicSemesterData } = useGetAllSemestersQuery(undefined);
+    const [params, setParams] = useState([]);
+    const { data: academicSemesterData, isLoading, isFetching } = useGetAllSemestersQuery(params);
 
     const tableData = academicSemesterData?.data?.map(({ _id, name, endMonth, startMonth, year }) => ({
-        _id,
+        key: _id,
         name,
         endMonth,
         startMonth,
@@ -21,33 +19,23 @@ const AcademicSemester = () => {
 
 
 
-    const columns: TableColumnsType<DataType> = [
+    const columns: TableColumnsType<TTableData> = [
         {
             title: 'Name',
+            key: "name",
             dataIndex: 'name',
-            showSorterTooltip: { target: 'full-header' },
             filters: [
                 {
-                    text: 'Joe',
-                    value: 'Joe',
+                    text: 'Autumn',
+                    value: 'Autumn',
                 },
                 {
-                    text: 'Jim',
-                    value: 'Jim',
+                    text: 'Summer',
+                    value: 'Summer',
                 },
                 {
-                    text: 'Submenu',
-                    value: 'Submenu',
-                    children: [
-                        {
-                            text: 'Green',
-                            value: 'Green',
-                        },
-                        {
-                            text: 'Black',
-                            value: 'Black',
-                        },
-                    ],
+                    text: 'Fall',
+                    value: 'Fall',
                 },
             ],
         },
@@ -66,13 +54,22 @@ const AcademicSemester = () => {
     ];
 
 
-    const onChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
+    const onChange: TableProps<TTableData>['onChange'] = (pagination, filters, sorter, extra) => {
+        if (extra.action === "filter") {
+            const queryParams = [];
+
+            filters.name?.forEach((item) => (
+                queryParams.push({ name: "name", value: item })
+            ));
+
+            setParams(queryParams);
+        }
     };
 
     return (
         <Table
             columns={columns}
+            loading={isFetching}
             dataSource={tableData}
             onChange={onChange}
             showSorterTooltip={{ target: 'sorter-icon' }}
