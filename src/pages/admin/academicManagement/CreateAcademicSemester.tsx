@@ -41,7 +41,6 @@ const CreateAcademicSemester = () => {
             console.log(semesterData);
             const res = await addAcademicSemester(semesterData);
 
-            console.log(res);
             if (res.data.errorSources) {
                 toast.error(res.data.errorSources[0].message, { id: toastId });
             } else {

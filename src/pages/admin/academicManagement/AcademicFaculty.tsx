@@ -1,9 +1,11 @@
-import React from 'react'
+
 
 const AcademicFaculty = () => {
     return (
-        <div>AcademicFaculty</div>
+        <div>
+            Academic Faculty
+        </div>
     )
-}
+};
 
 export default AcademicFaculty
