@@ -14,7 +14,7 @@ const CreateAcademicFaculty = () => {
 
     const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
 
-        const toastId = toast.loading("Creating...")
+        const facultyToastId = toast.loading("Creating...")
 
         const facultyData = {
             name: data.name
@@ -24,10 +24,10 @@ const CreateAcademicFaculty = () => {
             const res = await addFaculty(facultyData);
 
             if (res.data.errorSources) {
-                toast.error(res.data.errorSources[0].message, { id: toastId });
+                toast.error(res.data.errorSources[0].message, { id: facultyToastId });
             }
             else {
-                toast.success("Faculty created", { id: toastId });
+                toast.success("Faculty created", { id: facultyToastId });
             }
         } catch (error) {
             toast.error("something went wrong!");

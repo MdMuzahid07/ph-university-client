@@ -2,7 +2,12 @@ import { baseApi } from "../../api/baseApi";
 
 const facultyManagementApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-
+        getAllFaculties: builder.query({
+            query: (args) => ({
+                url: "/academic-faculties",
+                method: "GET",
+            })
+        }),
         addFaculty: builder.mutation({
             query: (data) => ({
                 url: "/academic-faculties/create-academic-faculty",
@@ -15,4 +20,4 @@ const facultyManagementApi = baseApi.injectEndpoints({
 });
 
 
-export const { useAddFacultyMutation } = facultyManagementApi;
+export const { useAddFacultyMutation, useGetAllFacultiesQuery } = facultyManagementApi;
