@@ -7,17 +7,40 @@ import PHForm from "../../../components/form/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DepartmentSchema } from "../../../schema/academicManagement.schema";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useAddDepartmentMutation } from "../../../redux/features/admin/departmentManagement.api";
+import { toast } from "sonner";
 
 const CreateAcademicDepartment = () => {
     const { data: allFaculties } = useGetAllFacultiesQuery();
+    const [addDepartment] = useAddDepartmentMutation();
 
     const options = allFaculties?.data?.map(({ _id, name }) => ({
         value: _id,
         label: name
     }));
 
-    const submitHandler: SubmitHandler<FieldValues> = (data) => {
-        console.log(data, "academic Department");
+    const submitHandler: SubmitHandler<FieldValues> = async (data) => {
+
+        const createDepartmentToastId = toast.loading("Creating...");
+
+        console.log(data)
+        const departmentData = {
+            name: data.name,
+            academicFaculty: data.academicFaculty
+        };
+
+        try {
+            const res = await addDepartment(departmentData);
+
+            if (res && res?.data?.success) {
+                toast.success("Department created", { id: createDepartmentToastId });
+            } else {
+                toast.error("Department not created!", { id: createDepartmentToastId });
+            }
+
+        } catch (error) {
+            toast.error("something went wrong!", { id: createDepartmentToastId });
+        }
     };
 
     return (
