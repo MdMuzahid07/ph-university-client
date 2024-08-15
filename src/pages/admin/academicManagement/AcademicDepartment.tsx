@@ -5,7 +5,7 @@ import { Button, Table } from "antd";
 
 const AcademicDepartment = () => {
     // const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-    const { data: academicSemesterData, isFetching } = useGetAllDepartmentsQuery(params);
+    const { data: academicSemesterData, isFetching } = useGetAllDepartmentsQuery();
 
     const tableData = academicSemesterData?.data?.map(({ _id, name, academicFaculty }) => ({
         key: _id,
