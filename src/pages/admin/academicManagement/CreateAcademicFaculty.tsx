@@ -4,12 +4,12 @@ import PHForm from "../../../components/form/PHForm"
 import PHInput from "../../../components/form/PHInput"
 import { FacultySchema } from "../../../schema/academicManagement.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useAddFacultyMutation } from "../../../redux/features/admin/facultyManagement.api"
 import { toast } from "sonner"
 import { FieldValues, SubmitHandler } from "react-hook-form"
+import { useAddAcademicFacultyMutation } from "../../../redux/features/admin/facultyManagement.api"
 
 const CreateAcademicFaculty = () => {
-    const [addFaculty] = useAddFacultyMutation();
+    const [addFaculty] = useAddAcademicFacultyMutation();
 
 
     const handleSubmit: SubmitHandler<FieldValues> = async (data) => {

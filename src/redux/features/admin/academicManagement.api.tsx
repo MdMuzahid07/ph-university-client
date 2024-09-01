@@ -8,7 +8,7 @@ const academicManagementApi = baseApi.injectEndpoints({
                 const params = new URLSearchParams();
 
                 if (args) {
-                    args.forEach((item: TQueryParam) => {
+                    args?.forEach((item: TQueryParam) => {
                         params.append(item.name, item.value as string)
                     });
                 }

@@ -2,16 +2,16 @@
 import { Button, Col, Flex } from "antd";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
-import { useGetAllFacultiesQuery } from "../../../redux/features/admin/facultyManagement.api";
 import PHForm from "../../../components/form/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DepartmentSchema } from "../../../schema/academicManagement.schema";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useAddDepartmentMutation } from "../../../redux/features/admin/departmentManagement.api";
 import { toast } from "sonner";
+import { useGetAllAcademicFacultiesQuery } from "../../../redux/features/admin/facultyManagement.api";
 
 const CreateAcademicDepartment = () => {
-    const { data: allFaculties } = useGetAllFacultiesQuery();
+    const { data: allFaculties } = useGetAllAcademicFacultiesQuery(undefined);
     const [addDepartment] = useAddDepartmentMutation();
 
     const options = allFaculties?.data?.map(({ _id, name }) => ({
