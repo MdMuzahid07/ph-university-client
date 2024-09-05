@@ -1,9 +1,10 @@
-import { TQueryParam, TResponseRedux, TStudent } from "../../../types";
+import { TQueryParam, TResponseRedux } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
-const userManagementApi = baseApi.injectEndpoints({
+
+const StudentCourseApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getAllStudents: builder.query({
+        getAllOfferedCourses: builder.query({
             query: (args) => {
                 const params = new URLSearchParams();
 
@@ -14,20 +15,21 @@ const userManagementApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    url: "/students",
+                    url: "/offered-courses/my-offered-courses",
                     method: "GET",
                     params: params
                 }
             },
-            transformResponse: (response: TResponseRedux<TStudent[]>) => {
+            transformResponse: (response: TResponseRedux<any>) => {
 
                 return {
                     data: response.data,
                     meta: response?.meta
                 }
-            }
+            },
+            providesTags: ["offeredCourse"]
         }),
-        getAllFaculties: builder.query({
+        getAllEnrolledCourse: builder.query({
             query: (args) => {
                 const params = new URLSearchParams();
 
@@ -38,43 +40,31 @@ const userManagementApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    url: "/faculties",
+                    url: "/enrolled-courses/my-enrolled-course",
                     method: "GET",
                     params: params
                 }
             },
-            transformResponse: (response: TResponseRedux<TStudent[]>) => {
+            transformResponse: (response: TResponseRedux<any>) => {
 
                 return {
                     data: response.data,
                     meta: response?.meta
                 }
-            }
+            },
+            providesTags: ["offeredCourse"]
         }),
-        addStudent: builder.mutation({
+
+        enrollCourse: builder.mutation({
             query: (data) => ({
-                url: "/users/create-student",
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
+                url: "/enrolled-courses/create-enrolled-course",
                 method: "POST",
                 body: data
-            })
+            }),
+            invalidatesTags: ["offeredCourse"]
         }),
-        changePassword: builder.mutation({
-            query: (data) => ({
-                url: "/auth/change-password",
-                method: "POST",
-                body: data
-            })
-        }),
+
     })
 });
 
-
-export const {
-    useAddStudentMutation,
-    useGetAllStudentsQuery,
-    useGetAllFacultiesQuery,
-    useChangePasswordMutation
-} = userManagementApi;
+export const { useGetAllOfferedCoursesQuery, useEnrollCourseMutation, useGetAllEnrolledCourseQuery } = StudentCourseApi;

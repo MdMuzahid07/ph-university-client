@@ -1,5 +1,6 @@
 import OfferedCourse from "../pages/student/OfferedCourse";
 import StudentDashboard from "../pages/student/StudentDashboard";
+import Schedule from "../pages/student/Schedule";
 
 
 export const StudentPaths = [
@@ -12,5 +13,10 @@ export const StudentPaths = [
         name: "Offered Course",
         path: "offered-course",
         element: <OfferedCourse />
+    },
+    {
+        name: "My Schedule",
+        path: "schedule",
+        element: <Schedule />
     },
 ];

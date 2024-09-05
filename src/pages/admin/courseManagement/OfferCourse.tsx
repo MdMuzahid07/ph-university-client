@@ -49,7 +49,7 @@ const OfferCourse = () => {
     const { data: academicFacultyData } = useGetAllAcademicFacultiesQuery(undefined);
     const { data: semesterData } = useGetAllSemestersQuery(undefined);
     const { data: academicDepartmentData } = useGetAllDepartmentsQuery(undefined);
-    const { data: selectedCourseFacultyData } = useGetCourseFacultiesQuery(selectedCourseId);
+    const { data: selectedCourseFacultyData } = useGetCourseFacultiesQuery(selectedCourseId, { skip: !selectedCourseId });
     const { data: courseData } = useGetAllCoursesQuery(undefined);
     console.log("from parent component", selectedCourseId);
 
